@@ -1304,29 +1304,45 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 #pragma mark - Helper
     
 - (CGFloat)visibleKeyboardHeight {
+    
 #if !defined(SV_APP_EXTENSIONS)
     UIWindow *keyboardWindow = nil;
+    
     for (UIWindow *testWindow in UIApplication.sharedApplication.windows) {
-        if(![testWindow.class isEqual:UIWindow.class]) {
-            keyboardWindow = testWindow;
-            break;
+        if (@available(iOS 11.0, *)) {
+            
+            if([testWindow.class isEqual:NSClassFromString(@"UIRemoteKeyboardWindow")]) {
+                
+                keyboardWindow = testWindow;
+                break;
+            }
+            
+        } else {
+            
+            if(![testWindow.class isEqual:UIWindow.class]) {
+                keyboardWindow = testWindow;
+                break;
+            }
         }
     }
     
     for (__strong UIView *possibleKeyboard in keyboardWindow.subviews) {
+        
         NSString *viewName = NSStringFromClass(possibleKeyboard.class);
         if([viewName hasPrefix:@"UI"]){
+            
             if([viewName hasSuffix:@"PeripheralHostView"] || [viewName hasSuffix:@"Keyboard"]){
+                
                 return CGRectGetHeight(possibleKeyboard.bounds);
             } else if ([viewName hasSuffix:@"InputSetContainerView"]){
                 for (__strong UIView *possibleKeyboardSubview in possibleKeyboard.subviews) {
+                    
+                    
+                    
                     viewName = NSStringFromClass(possibleKeyboardSubview.class);
                     if([viewName hasPrefix:@"UI"] && [viewName hasSuffix:@"InputSetHostView"]) {
-                        CGRect convertedRect = [possibleKeyboard convertRect:possibleKeyboardSubview.frame toView:self];
-                        CGRect intersectedRect = CGRectIntersection(convertedRect, self.bounds);
-                        if (!CGRectIsNull(intersectedRect)) {
-                            return CGRectGetHeight(intersectedRect);
-                        }
+                        
+                        return CGRectGetHeight(possibleKeyboardSubview.bounds);
                     }
                 }
             }

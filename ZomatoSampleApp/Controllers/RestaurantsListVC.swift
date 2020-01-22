@@ -10,8 +10,11 @@ import UIKit
 import CoreLocation
 import Alamofire
 import SVProgressHUD
+import Reachability
 
 class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewDataSource, UITableViewDelegate {
+    
+    let reachability = try! Reachability()
     
     @IBOutlet weak var mainTableView: UITableView!
   
@@ -21,6 +24,7 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
     var restaurantNamesArray:[String] = []
     var restaurantIdArray:[String] = []
     var restaurantImgArray:[String] = []
+    var restaurantThumbImgArray:[String] = []
     
     //Create Location Manger constant
     let locationManager = CLLocationManager()
@@ -49,6 +53,7 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
         self.mainTableView.register(UINib(nibName: "RestaurantsListCell", bundle: nil), forCellReuseIdentifier: "RestaurantsListCellId")
         
         self.mainTableView!.tableFooterView = UIView()
+       
         
         self.getRestaurantsListAPICall()
     }
@@ -73,69 +78,83 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
     func getRestaurantsListAPICall(){
         
         SVProgressHUD.show(withStatus: "Loading...")
-        let url = "https://developers.zomato.com/api/v2.1/geocode"
-        let params: [String: Any] = [
-            "lat": "12.97", //self.lattitudeValue,
-            "lon": "‎77.64"//self.longitudeValue
-        ]
         
-        let headers: HTTPHeaders = [
-            "user-key": "18efb2f1568a900815435ac7873d6ae7",
-            "Accept": "application/json"
-        ]
-        
-        AF.request(url, method: .get, parameters: params, encoding: URLEncoding.default, headers: headers).responseJSON { (response) in
-            switch response.result {
-            case .success(let JSON):
-                debugPrint(JSON)
-                //parse your response here
-                
-                if let dataDict = JSON as? [String:Any] {
+        reachability.whenReachable = { reachability in
+           
+            let url = "https://developers.zomato.com/api/v2.1/geocode"
+            let params: [String: Any] = [
+                "lat": "12.97", //self.lattitudeValue,
+                "lon": "‎77.64"//self.longitudeValue
+            ]
+            
+            let headers: HTTPHeaders = [
+                "user-key": "18efb2f1568a900815435ac7873d6ae7",
+                "Accept": "application/json"
+            ]
+            
+            AF.request(url, method: .get, parameters: params, encoding: URLEncoding.default, headers: headers).responseJSON { (response) in
+                switch response.result {
+                case .success(let JSON):
+                    debugPrint(JSON)
+                    //parse your response here
                     
-                    if let nearbyRestaurantsArray = dataDict["nearby_restaurants"] as? [[String:Any]] {
+                    if let dataDict = JSON as? [String:Any] {
                         
-                        self.restaurantNamesArray = []
-                        self.restaurantIdArray = []
-                        self.restaurantImgArray = []
-                        
-                        if nearbyRestaurantsArray.count > 0 {
+                        if let nearbyRestaurantsArray = dataDict["nearby_restaurants"] as? [[String:Any]] {
                             
-                            for dictData:Dictionary<String,Any> in nearbyRestaurantsArray{
+                            self.restaurantNamesArray = []
+                            self.restaurantIdArray = []
+                            self.restaurantImgArray = []
+                            self.restaurantThumbImgArray = []
+                            
+                            if nearbyRestaurantsArray.count > 0 {
                                 
-                            
-                                if let restaurantDataDict = dictData["restaurant"] as? [String:Any] {
+                                for dictData:Dictionary<String,Any> in nearbyRestaurantsArray{
                                     
-                                    let restaurantName:String = restaurantDataDict["name"] as? String ?? "No Name"
-                                    let restaurantId:String = restaurantDataDict["id"] as? String ?? ""
-                                    let restaurantFeatureImg:String = restaurantDataDict["featured_image"] as? String ?? ""
-                                    
-                                    self.restaurantNamesArray.append(restaurantName)
-                                    self.restaurantIdArray.append(restaurantId)
-                                    self.restaurantImgArray.append(restaurantFeatureImg)
+                                
+                                    if let restaurantDataDict = dictData["restaurant"] as? [String:Any] {
+                                        
+                                        let restaurantName:String = restaurantDataDict["name"] as? String ?? "No Name"
+                                        let restaurantId:String = restaurantDataDict["id"] as? String ?? ""
+                                        let restaurantFeatureImg:String = restaurantDataDict["featured_image"] as? String ?? ""
+                                        let restaurantThumbImg:String = restaurantDataDict["thumb"] as? String ?? ""
+                                        
+                                        self.restaurantNamesArray.append(restaurantName)
+                                        self.restaurantIdArray.append(restaurantId)
+                                        self.restaurantImgArray.append(restaurantFeatureImg)
+                                        self.restaurantThumbImgArray.append(restaurantThumbImg)
+                                    }
+                                    //self.idArray.append(idValue)
+                                    //self.titleArray.append(title)
                                 }
-                                //self.idArray.append(idValue)
-                                //self.titleArray.append(title)
+                                
                             }
-                            
+                            else{
+                                //no Restaurants present
+                            }
+                           // let cityName:String = (locationDict["city_name"] as? String)!
+                        
                         }
-                        else{
-                            //no Restaurants present
-                        }
-                       // let cityName:String = (locationDict["city_name"] as? String)!
-                    
                     }
-                }
-                SVProgressHUD.dismiss()
-                DispatchQueue.main.async {
+                    SVProgressHUD.dismiss()
+                    DispatchQueue.main.async {
+                        
+                        self.mainTableView.reloadData()
+                    }
                     
-                    self.mainTableView.reloadData()
+                case .failure(let error):
+                    debugPrint(error)
+                    SVProgressHUD.dismiss()
                 }
-                
-            case .failure(let error):
-                debugPrint(error)
-                SVProgressHUD.dismiss()
             }
         }
+        
+        
+        reachability.whenUnreachable = { _ in
+           // print("Not reachable")
+           AppUtilitiesSwift.showAlert(title: " No internet connection", message: "Please check your internet connection", vc: self)
+        }
+        
         
     }
     
@@ -158,12 +177,23 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
                 guard let data = data, error == nil else { return }
                 DispatchQueue.main.async() {
                     cell.mainBGImage.image = UIImage(data: data)
-                    cell.thumbImage.image = UIImage(data: data)
                 }
             }
         }
         else{
             cell.mainBGImage.image = UIImage(named: "imageNotFound.png")
+        }
+        
+        if self.restaurantThumbImgArray[indexPath.item] != ""{
+            AppUtilitiesSwift.getData(from: self.restaurantThumbImgArray[indexPath.item] as String) { data, response, error in
+                guard let data = data, error == nil else { return }
+                DispatchQueue.main.async() {
+                    cell.thumbImage.image = UIImage(data: data)
+                }
+            }
+        }
+        else{
+            
             cell.thumbImage.image = UIImage(named: "imageNotFound.png")
         }
         

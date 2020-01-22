@@ -42,6 +42,21 @@
             </objects>
             <point key="canvasLocation" x="1047.8260869565217" y="138.61607142857142"/>
         </scene>
+        <!--Restaurants DetailsVC-->
+        <scene sceneID="laR-XE-vax">
+            <objects>
+                <viewController storyboardIdentifier="RestaurantsDetailsVCId" id="5gc-d1-qS2" customClass="RestaurantsDetailsVC" customModule="ZomatoSampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vA4-eJ-3eu">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="j4d-Rs-rpo"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2GR-ma-Ufb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1898" y="133"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="Anc-Qm-gfK">
             <objects>

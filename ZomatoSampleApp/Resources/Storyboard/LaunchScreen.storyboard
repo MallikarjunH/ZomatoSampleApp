@@ -21,10 +21,10 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="7G1-go-YkR" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="95O-Pg-tTF"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="7G1-go-YkR" secondAttribute="trailing" id="Lkm-1Y-nOd"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="7G1-go-YkR" secondAttribute="bottom" id="MIh-nt-x39"/>
-                            <constraint firstItem="7G1-go-YkR" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="iGu-EL-lsu"/>
+                            <constraint firstItem="7G1-go-YkR" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="1Cc-oB-a3M"/>
+                            <constraint firstItem="7G1-go-YkR" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="UUH-vd-DUp"/>
+                            <constraint firstItem="7G1-go-YkR" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="gVv-1U-KPS"/>
+                            <constraint firstItem="7G1-go-YkR" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="z6N-Sf-Bob"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

@@ -11,8 +11,8 @@ import UIKit
 
 class AppUtilitiesSwift: NSObject {
     
-   
-
+    
+    
     static let sharedUtilityInstance: AppUtilitiesSwift? = {
         var instance = AppUtilitiesSwift()
         return instance
@@ -31,6 +31,13 @@ class AppUtilitiesSwift: NSObject {
         
         URLSession.shared.dataTask(with: imgURL!, completionHandler: completion).resume()
     }
-  
+    
+    class  func showAlert(title:String, message:String, vc: UIViewController) {
+        
+        let alertView1 = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertView1.addAction(UIAlertAction.init(title: "OK", style: .default, handler: nil))
+        vc.present(alertView1,animated: true,completion: nil)
+    }
+    
 }
 

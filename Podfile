@@ -7,5 +7,6 @@ target 'ZomatoSampleApp' do
 
   pod 'Alamofire', '~> 5.0.0-rc.3'  
   pod 'SVProgressHUD'
+  pod 'ReachabilitySwift'
 
 end
