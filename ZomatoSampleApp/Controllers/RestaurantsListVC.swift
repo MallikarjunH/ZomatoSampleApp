@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import Alamofire
+import SVProgressHUD
 
 class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewDataSource, UITableViewDelegate {
     
@@ -71,12 +72,12 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
   
     func getRestaurantsListAPICall(){
         
+        SVProgressHUD.show(withStatus: "Loading...")
         let url = "https://developers.zomato.com/api/v2.1/geocode"
         let params: [String: Any] = [
             "lat": "12.97", //self.lattitudeValue,
             "lon": "‎77.64"//self.longitudeValue
         ]
-        
         
         let headers: HTTPHeaders = [
             "user-key": "18efb2f1568a900815435ac7873d6ae7",
@@ -124,7 +125,7 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
                     
                     }
                 }
-                
+                SVProgressHUD.dismiss()
                 DispatchQueue.main.async {
                     
                     self.mainTableView.reloadData()
@@ -132,6 +133,7 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
                 
             case .failure(let error):
                 debugPrint(error)
+                SVProgressHUD.dismiss()
             }
         }
         
