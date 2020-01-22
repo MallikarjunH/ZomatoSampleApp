@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,7 +14,23 @@
 		0633718223D805D30089E9DB /* RestaurantsListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0633718123D805D30089E9DB /* RestaurantsListVC.swift */; };
 		0633718423D806A60089E9DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0633718323D806A60089E9DB /* LaunchScreen.storyboard */; };
 		0633718623D806B50089E9DB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0633718523D806B50089E9DB /* Main.storyboard */; };
+		0633718B23D80F3C0089E9DB /* Pods_ZomatoSampleApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1AC5C152AEAFCCCC825383 /* Pods_ZomatoSampleApp.framework */; };
+		0633718C23D80F3C0089E9DB /* Pods_ZomatoSampleApp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AB1AC5C152AEAFCCCC825383 /* Pods_ZomatoSampleApp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0633718D23D80F3C0089E9DB /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0633718C23D80F3C0089E9DB /* Pods_ZomatoSampleApp.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0633716023D804730089E9DB /* ZomatoSampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZomatoSampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -26,6 +42,11 @@
 		0633718123D805D30089E9DB /* RestaurantsListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantsListVC.swift; sourceTree = "<group>"; };
 		0633718323D806A60089E9DB /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0633718523D806B50089E9DB /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		0633718723D80AEE0089E9DB /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0633718E23D818C10089E9DB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		63156815BDF86C54D2FB5086 /* Pods-ZomatoSampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZomatoSampleApp.debug.xcconfig"; path = "Target Support Files/Pods-ZomatoSampleApp/Pods-ZomatoSampleApp.debug.xcconfig"; sourceTree = "<group>"; };
+		AB1AC5C152AEAFCCCC825383 /* Pods_ZomatoSampleApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZomatoSampleApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFD24E8E1ACEA341940B777D /* Pods-ZomatoSampleApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZomatoSampleApp.release.xcconfig"; path = "Target Support Files/Pods-ZomatoSampleApp/Pods-ZomatoSampleApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0633718B23D80F3C0089E9DB /* Pods_ZomatoSampleApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +66,8 @@
 			children = (
 				0633716223D804730089E9DB /* ZomatoSampleApp */,
 				0633716123D804730089E9DB /* Products */,
+				700BCA3BB9FA26441130AE67 /* Pods */,
+				FFC26A1FA0F976A9A2F39B68 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -126,6 +150,25 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		700BCA3BB9FA26441130AE67 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				63156815BDF86C54D2FB5086 /* Pods-ZomatoSampleApp.debug.xcconfig */,
+				FFD24E8E1ACEA341940B777D /* Pods-ZomatoSampleApp.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		FFC26A1FA0F976A9A2F39B68 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0633718E23D818C10089E9DB /* CoreLocation.framework */,
+				0633718723D80AEE0089E9DB /* Alamofire.framework */,
+				AB1AC5C152AEAFCCCC825383 /* Pods_ZomatoSampleApp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -133,9 +176,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0633717723D804760089E9DB /* Build configuration list for PBXNativeTarget "ZomatoSampleApp" */;
 			buildPhases = (
+				9AEC34767CD42F7BCF698792 /* [CP] Check Pods Manifest.lock */,
 				0633715C23D804730089E9DB /* Sources */,
 				0633715D23D804730089E9DB /* Frameworks */,
 				0633715E23D804730089E9DB /* Resources */,
+				D1B2AD6D750B84DAD19DB287 /* [CP] Embed Pods Frameworks */,
+				0633718D23D80F3C0089E9DB /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -191,6 +237,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9AEC34767CD42F7BCF698792 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ZomatoSampleApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D1B2AD6D750B84DAD19DB287 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ZomatoSampleApp/Pods-ZomatoSampleApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ZomatoSampleApp/Pods-ZomatoSampleApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ZomatoSampleApp/Pods-ZomatoSampleApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0633715C23D804730089E9DB /* Sources */ = {
@@ -323,6 +411,7 @@
 		};
 		0633717823D804760089E9DB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 63156815BDF86C54D2FB5086 /* Pods-ZomatoSampleApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -341,6 +430,7 @@
 		};
 		0633717923D804760089E9DB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FFD24E8E1ACEA341940B777D /* Pods-ZomatoSampleApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
