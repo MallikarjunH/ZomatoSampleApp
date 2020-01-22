@@ -7,24 +7,52 @@
 //
 
 import UIKit
+import CoreLocation
 
-class RestaurantsListVC: UIViewController {
+class RestaurantsListVC: UIViewController,CLLocationManagerDelegate {
 
+    //Create Location Manger constant
+    let locationManager = CLLocationManager()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        // FOr use when app is open and in the background mode
+         locationManager.requestAlwaysAuthorization()
+         
+         // For use when the app is open
+        // locationManager.requestWhenInUseAuthorization()
+         
+         if CLLocationManager.locationServicesEnabled() {
+             
+             locationManager.delegate = self
+             locationManager.desiredAccuracy = kCLLocationAccuracyBest
+             locationManager.startUpdatingLocation()
+         }
+        
+        self.getRestaurantsListAPICall()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    //get actual locatioln
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
+        
+        
+        if let location = locations.first{
+            
+            //print(location.coordinate)
+            
+            print("Lattitude : \(location.coordinate.latitude)")
+            print("Longitude : \(location.coordinate.longitude)")
+          
+        }
     }
-    */
+
+  
+    func getRestaurantsListAPICall(){
+        
+    }
 
 }
