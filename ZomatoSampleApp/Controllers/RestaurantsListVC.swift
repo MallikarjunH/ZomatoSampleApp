@@ -10,14 +10,16 @@ import UIKit
 import CoreLocation
 import Alamofire
 
-class RestaurantsListVC: UIViewController,CLLocationManagerDelegate {
-
-    @IBOutlet weak var tempLabel: UILabel!
+class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewDataSource, UITableViewDelegate {
     
-    var cityName:String = ""
-    
+    @IBOutlet weak var mainTableView: UITableView!
+  
     var lattitudeValue:String = ""
     var longitudeValue:String = ""
+    
+    var restaurantNamesArray:[String] = []
+    var restaurantIdArray:[String] = []
+    var restaurantImgArray:[String] = []
     
     //Create Location Manger constant
     let locationManager = CLLocationManager()
@@ -27,6 +29,7 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
         
         // FOr use when app is open and in the background mode
          locationManager.requestAlwaysAuthorization()
@@ -40,6 +43,11 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate {
              locationManager.desiredAccuracy = kCLLocationAccuracyBest
              locationManager.startUpdatingLocation()
          }
+        
+        //tableViewcell
+        self.mainTableView.register(UINib(nibName: "RestaurantsListCell", bundle: nil), forCellReuseIdentifier: "RestaurantsListCellId")
+        
+        self.mainTableView!.tableFooterView = UIView()
         
         self.getRestaurantsListAPICall()
     }
@@ -85,8 +93,28 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate {
                     
                     if let nearbyRestaurantsArray = dataDict["nearby_restaurants"] as? [[String:Any]] {
                         
+                        self.restaurantNamesArray = []
+                        self.restaurantIdArray = []
+                        self.restaurantImgArray = []
+                        
                         if nearbyRestaurantsArray.count > 0 {
                             
+                            for dictData:Dictionary<String,Any> in nearbyRestaurantsArray{
+                                
+                            
+                                if let restaurantDataDict = dictData["restaurant"] as? [String:Any] {
+                                    
+                                    let restaurantName:String = restaurantDataDict["name"] as? String ?? "No Name"
+                                    let restaurantId:String = restaurantDataDict["id"] as? String ?? ""
+                                    let restaurantFeatureImg:String = restaurantDataDict["featured_image"] as? String ?? ""
+                                    
+                                    self.restaurantNamesArray.append(restaurantName)
+                                    self.restaurantIdArray.append(restaurantId)
+                                    self.restaurantImgArray.append(restaurantFeatureImg)
+                                }
+                                //self.idArray.append(idValue)
+                                //self.titleArray.append(title)
+                            }
                             
                         }
                         else{
@@ -99,13 +127,52 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate {
                 
                 DispatchQueue.main.async {
                     
-                    self.tempLabel.text = self.cityName
+                    self.mainTableView.reloadData()
                 }
+                
             case .failure(let error):
                 debugPrint(error)
             }
         }
         
+    }
+    
+    //MARK: Tableview Datasource and Deleagte methods
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return self.restaurantNamesArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RestaurantsListCellId", for: indexPath) as! RestaurantsListCell
+        
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
+        
+        cell.restaurantNameLabel.text = self.restaurantNamesArray[indexPath.row]
+        
+        if self.restaurantImgArray[indexPath.item] != ""{
+            AppUtilitiesSwift.getData(from: self.restaurantImgArray[indexPath.item] as String) { data, response, error in
+                guard let data = data, error == nil else { return }
+                DispatchQueue.main.async() {
+                    cell.mainBGImage.image = UIImage(data: data)
+                    cell.thumbImage.image = UIImage(data: data)
+                }
+            }
+        }
+        else{
+            cell.mainBGImage.image = UIImage(named: "imageNotFound.png")
+            cell.thumbImage.image = UIImage(named: "imageNotFound.png")
+        }
+        
+        
+        return cell
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return 210
     }
 
 }
