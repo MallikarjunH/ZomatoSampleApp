@@ -49,7 +49,23 @@
                     <view key="view" contentMode="scaleToFill" id="vA4-eJ-3eu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="R87-kk-66o">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="5gc-d1-qS2" id="TuY-KD-H8w"/>
+                                    <outlet property="delegate" destination="5gc-d1-qS2" id="h1K-kM-2Oh"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="R87-kk-66o" firstAttribute="leading" secondItem="j4d-Rs-rpo" secondAttribute="leading" id="E5f-l8-ovh"/>
+                            <constraint firstItem="j4d-Rs-rpo" firstAttribute="trailing" secondItem="R87-kk-66o" secondAttribute="trailing" id="c4U-Hj-nLx"/>
+                            <constraint firstItem="j4d-Rs-rpo" firstAttribute="bottom" secondItem="R87-kk-66o" secondAttribute="bottom" id="cIy-hV-M4g"/>
+                            <constraint firstItem="R87-kk-66o" firstAttribute="top" secondItem="j4d-Rs-rpo" secondAttribute="top" id="cQ2-JO-h5B"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="j4d-Rs-rpo"/>
                     </view>
                 </viewController>

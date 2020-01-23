@@ -10,11 +10,9 @@ import UIKit
 import CoreLocation
 import Alamofire
 import SVProgressHUD
-import Reachability
 
 class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewDataSource, UITableViewDelegate {
-    
-    let reachability = try! Reachability()
+
     
     @IBOutlet weak var mainTableView: UITableView!
   
@@ -25,6 +23,7 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
     var restaurantIdArray:[String] = []
     var restaurantImgArray:[String] = []
     var restaurantThumbImgArray:[String] = []
+    var restaurantWebSiteArray:[String] = []
     
     //Create Location Manger constant
     let locationManager = CLLocationManager()
@@ -79,84 +78,78 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
         
         SVProgressHUD.show(withStatus: "Loading...")
         
-        reachability.whenReachable = { reachability in
-           
-            let url = "https://developers.zomato.com/api/v2.1/geocode"
-            let params: [String: Any] = [
-                "lat": "12.97", //self.lattitudeValue,
-                "lon": "‎77.64"//self.longitudeValue
-            ]
-            
-            let headers: HTTPHeaders = [
-                "user-key": "18efb2f1568a900815435ac7873d6ae7",
-                "Accept": "application/json"
-            ]
-            
-            AF.request(url, method: .get, parameters: params, encoding: URLEncoding.default, headers: headers).responseJSON { (response) in
-                switch response.result {
-                case .success(let JSON):
-                    debugPrint(JSON)
-                    //parse your response here
+        
+        let url = "https://developers.zomato.com/api/v2.1/geocode"
+        let params: [String: Any] = [
+            "lat": "12.97", //self.lattitudeValue,
+            "lon": "‎77.64"//self.longitudeValue
+        ]
+        
+        let headers: HTTPHeaders = [
+            "user-key": "18efb2f1568a900815435ac7873d6ae7",
+            "Accept": "application/json"
+        ]
+        
+        AF.request(url, method: .get, parameters: params, encoding: URLEncoding.default, headers: headers).responseJSON { (response) in
+            switch response.result {
+            case .success(let JSON):
+                debugPrint(JSON)
+                //parse your response here
+                
+                if let dataDict = JSON as? [String:Any] {
                     
-                    if let dataDict = JSON as? [String:Any] {
+                    if let nearbyRestaurantsArray = dataDict["nearby_restaurants"] as? [[String:Any]] {
                         
-                        if let nearbyRestaurantsArray = dataDict["nearby_restaurants"] as? [[String:Any]] {
+                        self.restaurantNamesArray = []
+                        self.restaurantIdArray = []
+                        self.restaurantImgArray = []
+                        self.restaurantThumbImgArray = []
+                        self.restaurantWebSiteArray = []
+                        
+                        if nearbyRestaurantsArray.count > 0 {
                             
-                            self.restaurantNamesArray = []
-                            self.restaurantIdArray = []
-                            self.restaurantImgArray = []
-                            self.restaurantThumbImgArray = []
-                            
-                            if nearbyRestaurantsArray.count > 0 {
+                            for dictData:Dictionary<String,Any> in nearbyRestaurantsArray{
                                 
-                                for dictData:Dictionary<String,Any> in nearbyRestaurantsArray{
+                                
+                                if let restaurantDataDict = dictData["restaurant"] as? [String:Any] {
                                     
-                                
-                                    if let restaurantDataDict = dictData["restaurant"] as? [String:Any] {
-                                        
-                                        let restaurantName:String = restaurantDataDict["name"] as? String ?? "No Name"
-                                        let restaurantId:String = restaurantDataDict["id"] as? String ?? ""
-                                        let restaurantFeatureImg:String = restaurantDataDict["featured_image"] as? String ?? ""
-                                        let restaurantThumbImg:String = restaurantDataDict["thumb"] as? String ?? ""
-                                        
-                                        self.restaurantNamesArray.append(restaurantName)
-                                        self.restaurantIdArray.append(restaurantId)
-                                        self.restaurantImgArray.append(restaurantFeatureImg)
-                                        self.restaurantThumbImgArray.append(restaurantThumbImg)
-                                    }
-                                    //self.idArray.append(idValue)
-                                    //self.titleArray.append(title)
+                                    let restaurantName:String = restaurantDataDict["name"] as? String ?? "No Name"
+                                    let restaurantId:String = restaurantDataDict["id"] as? String ?? ""
+                                    let restaurantFeatureImg:String = restaurantDataDict["featured_image"] as? String ?? ""
+                                    let restaurantThumbImg:String = restaurantDataDict["thumb"] as? String ?? ""
+                                    let restaurantWebSite:String = restaurantDataDict["url"] as? String ?? "https://www.google.com/"
+                                    
+                                    self.restaurantNamesArray.append(restaurantName)
+                                    self.restaurantIdArray.append(restaurantId)
+                                    self.restaurantImgArray.append(restaurantFeatureImg)
+                                    self.restaurantThumbImgArray.append(restaurantThumbImg)
+                                    self.restaurantWebSiteArray.append(restaurantWebSite)
                                 }
-                                
+                                //self.idArray.append(idValue)
+                                //self.titleArray.append(title)
                             }
-                            else{
-                                //no Restaurants present
-                            }
-                           // let cityName:String = (locationDict["city_name"] as? String)!
-                        
+                            
                         }
-                    }
-                    SVProgressHUD.dismiss()
-                    DispatchQueue.main.async {
+                        else{
+                            //no Restaurants present
+                        }
+                        // let cityName:String = (locationDict["city_name"] as? String)!
                         
-                        self.mainTableView.reloadData()
                     }
-                    
-                case .failure(let error):
-                    debugPrint(error)
-                    SVProgressHUD.dismiss()
                 }
+                SVProgressHUD.dismiss()
+                DispatchQueue.main.async {
+                    
+                    self.mainTableView.reloadData()
+                }
+                
+            case .failure(let error):
+                debugPrint(error)
+                SVProgressHUD.dismiss()
             }
         }
-        
-        
-        reachability.whenUnreachable = { _ in
-           // print("Not reachable")
-           AppUtilitiesSwift.showAlert(title: " No internet connection", message: "Please check your internet connection", vc: self)
-        }
-        
-        
     }
+    
     
     //MARK: Tableview Datasource and Deleagte methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -197,14 +190,39 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
             cell.thumbImage.image = UIImage(named: "imageNotFound.png")
         }
         
+        cell.websiteButton.addTarget(self, action: #selector(webSiteButtonClickAction), for: .touchUpInside)
         
         return cell
         
     }
+
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return 210
     }
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let restaurantDetailsVC = self.storyboard!.instantiateViewController(withIdentifier: "RestaurantsDetailsVCId") as? RestaurantsDetailsVC
+        restaurantDetailsVC?.restaurantId = self.restaurantIdArray[indexPath.row]
+        
+        if (navigationController?.topViewController is RestaurantsDetailsVC) {
+            return
+        } else {
+            navigationController?.pushViewController(restaurantDetailsVC!, animated: true)
+        }
+    }
+    
+    //MARK:
+    @objc func webSiteButtonClickAction(sender:UIButton){
+      
+       // UIApplication.shared.openURL(NSURL(string: "http://www.google.com")! as URL) //'openURL' was deprecated in iOS 10.0
+        
+        let myUrl = "http://www.google.com"
+        if let url = URL(string: "\(myUrl)"), !url.absoluteString.isEmpty {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
 }
