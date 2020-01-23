@@ -193,6 +193,10 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
             cell.thumbImage.image = UIImage(named: "imageNotFound.png")
         }
         
+        cell.websiteButton.layer.cornerRadius = 5.0
+        cell.websiteButton.clipsToBounds = true
+        
+        cell.websiteButton.tag = indexPath.row
         cell.websiteButton.addTarget(self, action: #selector(webSiteButtonClickAction), for: .touchUpInside)
         
         return cell
@@ -224,7 +228,7 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
       
        // UIApplication.shared.openURL(NSURL(string: "http://www.google.com")! as URL) //'openURL' was deprecated in iOS 10.0
         
-        let myUrl = "http://www.google.com"
+        let myUrl = self.restaurantWebSiteArray[sender.tag]
         if let url = URL(string: "\(myUrl)"), !url.absoluteString.isEmpty {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
