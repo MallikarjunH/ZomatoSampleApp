@@ -83,8 +83,8 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
         
         let url = "https://developers.zomato.com/api/v2.1/geocode"
         let params: [String: Any] = [
-            "lat": self.lattitudeValue,
-            "lon": self.longitudeValue
+            "lat": "12.97", //self.lattitudeValue,
+            "lon": "‎77.64" //self.longitudeValue
         ]
         
         let headers: HTTPHeaders = [
@@ -95,8 +95,7 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
         AF.request(url, method: .get, parameters: params, encoding: URLEncoding.default, headers: headers).responseJSON { (response) in
             switch response.result {
             case .success(let JSON):
-                debugPrint(JSON)
-                //parse your response here
+               // debugPrint(JSON)
                 
                 if let dataDict = JSON as? [String:Any] {
                     
@@ -133,6 +132,8 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
                         }
                         else{
                             //no Restaurants present
+                            AppUtilitiesSwift.showAlert(title: "Oops..", message: "No Restaurant Available in your area", vc: self)
+                            IHProgressHUD.dismiss()
                         }
                         
                         
