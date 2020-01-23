@@ -227,7 +227,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803915" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="R87-kk-66o" firstAttribute="leading" secondItem="j4d-Rs-rpo" secondAttribute="leading" id="E5f-l8-ovh"/>
                             <constraint firstItem="j4d-Rs-rpo" firstAttribute="trailing" secondItem="R87-kk-66o" secondAttribute="trailing" id="c4U-Hj-nLx"/>

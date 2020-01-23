@@ -83,8 +83,8 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
         
         let url = "https://developers.zomato.com/api/v2.1/geocode"
         let params: [String: Any] = [
-            "lat": "12.97", //self.lattitudeValue,
-            "lon": "‎77.64"//self.longitudeValue
+            "lat": self.lattitudeValue,
+            "lon": self.longitudeValue
         ]
         
         let headers: HTTPHeaders = [
@@ -127,15 +127,14 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
                                     self.restaurantThumbImgArray.append(restaurantThumbImg)
                                     self.restaurantWebSiteArray.append(restaurantWebSite)
                                 }
-                                //self.idArray.append(idValue)
-                                //self.titleArray.append(title)
+                               
                             }
                             
                         }
                         else{
                             //no Restaurants present
                         }
-                        // let cityName:String = (locationDict["city_name"] as? String)!
+                        
                         
                     }
                 }
@@ -155,6 +154,27 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
     
     
     //MARK: Tableview Datasource and Deleagte methods
+    
+    func numberOfSections(in tableView: UITableView) -> Int
+    {
+        var numOfSections: Int = 0
+        if self.restaurantNamesArray.count > 0
+        {
+            numOfSections            = 1
+            tableView.backgroundView = nil
+        }
+        else
+        {
+            let noDataLabel: UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+            noDataLabel.text          = "No data available"
+            noDataLabel.textColor     = UIColor.black
+            noDataLabel.textAlignment = .center
+            tableView.backgroundView  = noDataLabel
+            tableView.separatorStyle  = .none
+        }
+        return numOfSections
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return self.restaurantNamesArray.count
@@ -225,8 +245,6 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
     
     //MARK: Website Button clicked
     @objc func webSiteButtonClickAction(sender:UIButton){
-      
-       // UIApplication.shared.openURL(NSURL(string: "http://www.google.com")! as URL) //'openURL' was deprecated in iOS 10.0
         
         let myUrl = self.restaurantWebSiteArray[sender.tag]
         if let url = URL(string: "\(myUrl)"), !url.absoluteString.isEmpty {
