@@ -206,6 +206,8 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
         
         let restaurantDetailsVC = self.storyboard!.instantiateViewController(withIdentifier: "RestaurantsDetailsVCId") as? RestaurantsDetailsVC
         restaurantDetailsVC?.restaurantId = self.restaurantIdArray[indexPath.row]
+        restaurantDetailsVC?.restaurantName = self.restaurantNamesArray[indexPath.row]
+        restaurantDetailsVC?.restaurantImg = self.restaurantImgArray[indexPath.row]
         
         if (navigationController?.topViewController is RestaurantsDetailsVC) {
             return

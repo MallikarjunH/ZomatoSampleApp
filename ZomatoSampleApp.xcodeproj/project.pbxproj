@@ -17,7 +17,7 @@
 		0633718B23D80F3C0089E9DB /* Pods_ZomatoSampleApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1AC5C152AEAFCCCC825383 /* Pods_ZomatoSampleApp.framework */; };
 		0633718C23D80F3C0089E9DB /* Pods_ZomatoSampleApp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AB1AC5C152AEAFCCCC825383 /* Pods_ZomatoSampleApp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0633719323D82B800089E9DB /* RestaurantsListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0633719223D82B800089E9DB /* RestaurantsListCell.xib */; };
-		0633719623D82CA10089E9DB /* RestaurantsListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0633719523D82CA10089E9DB /* RestaurantsListCell.swift */; };
+		0633719623D82CA10089E9DB /* RestaurantsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0633719523D82CA10089E9DB /* RestaurantsCell.swift */; };
 		0633719823D85F8C0089E9DB /* AppUtilitiesSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0633719723D85F8C0089E9DB /* AppUtilitiesSwift.swift */; };
 		0633719A23D8623B0089E9DB /* imageNotFound.png in Resources */ = {isa = PBXBuildFile; fileRef = 0633719923D8623B0089E9DB /* imageNotFound.png */; };
 		0633719C23D8638E0089E9DB /* sds-04.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0633719B23D8638E0089E9DB /* sds-04.jpg */; };
@@ -51,7 +51,7 @@
 		0633718723D80AEE0089E9DB /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0633718E23D818C10089E9DB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		0633719223D82B800089E9DB /* RestaurantsListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RestaurantsListCell.xib; sourceTree = "<group>"; };
-		0633719523D82CA10089E9DB /* RestaurantsListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantsListCell.swift; sourceTree = "<group>"; };
+		0633719523D82CA10089E9DB /* RestaurantsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantsCell.swift; sourceTree = "<group>"; };
 		0633719723D85F8C0089E9DB /* AppUtilitiesSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtilitiesSwift.swift; sourceTree = "<group>"; };
 		0633719923D8623B0089E9DB /* imageNotFound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imageNotFound.png; sourceTree = "<group>"; };
 		0633719B23D8638E0089E9DB /* sds-04.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "sds-04.jpg"; sourceTree = "<group>"; };
@@ -116,7 +116,7 @@
 		0633717B23D804CE0089E9DB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				0633719523D82CA10089E9DB /* RestaurantsListCell.swift */,
+				0633719523D82CA10089E9DB /* RestaurantsCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -317,7 +317,7 @@
 				0633719E23D86BD90089E9DB /* RestaurantsDetailsVC.swift in Sources */,
 				0633719823D85F8C0089E9DB /* AppUtilitiesSwift.swift in Sources */,
 				0633716E23D804740089E9DB /* ZomatoSampleApp.xcdatamodeld in Sources */,
-				0633719623D82CA10089E9DB /* RestaurantsListCell.swift in Sources */,
+				0633719623D82CA10089E9DB /* RestaurantsCell.swift in Sources */,
 				0633716423D804730089E9DB /* AppDelegate.swift in Sources */,
 				0633716623D804730089E9DB /* SceneDelegate.swift in Sources */,
 				0633718223D805D30089E9DB /* RestaurantsListVC.swift in Sources */,
