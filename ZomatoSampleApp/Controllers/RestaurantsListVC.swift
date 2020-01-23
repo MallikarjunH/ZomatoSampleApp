@@ -55,6 +55,7 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
        
         
         self.getRestaurantsListAPICall()
+        
     }
     
     //get actual locatioln

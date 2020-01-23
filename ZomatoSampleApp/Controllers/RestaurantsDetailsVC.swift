@@ -28,8 +28,8 @@ class RestaurantsDetailsVC: UIViewController,UITableViewDataSource, UITableViewD
 
         // Do any additional setup after loading the view.
     
-        self.getRestaurantDetailsAPICall()
         self.title = restaurantName
+        self.getRestaurantDetailsAPICall()
         
         self.mainTableView!.tableFooterView = UIView()
     }
