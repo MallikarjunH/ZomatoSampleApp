@@ -21,6 +21,7 @@ class RestaurantsDetailsVC: UIViewController,UITableViewDataSource, UITableViewD
     var restaurantCost:String = ""
     var restaurantContact:String = ""
     
+
     @IBOutlet weak var mainTableView: UITableView!
     
     override func viewDidLoad() {
@@ -32,10 +33,12 @@ class RestaurantsDetailsVC: UIViewController,UITableViewDataSource, UITableViewD
         self.getRestaurantDetailsAPICall()
         
         self.mainTableView!.tableFooterView = UIView()
+        self.mainTableView!.separatorStyle = .none
     }
     
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    //MARK: Tableview datasource and delegate methods
+    func numberOfSections(in tableView: UITableView) -> Int {
         
         return 2
     }
@@ -50,6 +53,7 @@ class RestaurantsDetailsVC: UIViewController,UITableViewDataSource, UITableViewD
         if indexPath.section == 0 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "RestaurantsDetailsCell1Id", for: indexPath) as! RestaurantsDetailsCell1
+            cell.selectionStyle = UITableViewCell.SelectionStyle.none;
             
             if self.restaurantImg != ""{
                 AppUtilitiesSwift.getData(from: self.restaurantImg as String) { data, response, error in
@@ -69,6 +73,7 @@ class RestaurantsDetailsVC: UIViewController,UITableViewDataSource, UITableViewD
         else{
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "RestaurantsDetailsCell2Id", for: indexPath) as! RestaurantsDetailsCell2
+            cell.selectionStyle = UITableViewCell.SelectionStyle.none;
             
             cell.addressLabel.text = restaurantAddress
             cell.cuisinesLabel.text = restaurantMenu
@@ -91,6 +96,7 @@ class RestaurantsDetailsVC: UIViewController,UITableViewDataSource, UITableViewD
         }
     }
     
+    //MARK: Get Restaturant Details API Call
     func getRestaurantDetailsAPICall(){
         
         IHProgressHUD.show()
@@ -130,10 +136,10 @@ class RestaurantsDetailsVC: UIViewController,UITableViewDataSource, UITableViewD
                     //Cost
                     let cost:Int = dataDict["average_cost_for_two"] as? Int ??  0
                     if cost == 0 {
-                         self.restaurantTimings = "Average cost for two - Not Available"
+                         self.restaurantCost = "Average cost for two - Not Available"
                     }
                     else{
-                         self.restaurantTimings = "Average cost for two - R.\(cost)"
+                         self.restaurantCost = "Average cost for two - R.\(cost)"
                     }
                    
                     //contact //phone_numbers : "+91 8061915234" //restaurantContact
@@ -154,6 +160,7 @@ class RestaurantsDetailsVC: UIViewController,UITableViewDataSource, UITableViewD
         }
         
     }
+    
 
    
 }

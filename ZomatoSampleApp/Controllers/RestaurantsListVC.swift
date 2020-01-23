@@ -52,13 +52,13 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
         self.mainTableView.register(UINib(nibName: "RestaurantsListCell", bundle: nil), forCellReuseIdentifier: "RestaurantsListCellId")
         
         self.mainTableView!.tableFooterView = UIView()
-       
+        self.mainTableView!.separatorStyle = .none
         
         self.getRestaurantsListAPICall()
         
     }
     
-    //get actual locatioln
+    //MARK: get actual locatioln
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
         
         
@@ -75,6 +75,7 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
     }
 
   
+    //MARK: GET Restaurant List API Call
     func getRestaurantsListAPICall(){
         
         IHProgressHUD.show()
@@ -218,7 +219,7 @@ class RestaurantsListVC: UIViewController,CLLocationManagerDelegate,UITableViewD
         }
     }
     
-    //MARK:
+    //MARK: Website Button clicked
     @objc func webSiteButtonClickAction(sender:UIButton){
       
        // UIApplication.shared.openURL(NSURL(string: "http://www.google.com")! as URL) //'openURL' was deprecated in iOS 10.0
