@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import SVProgressHUD
+import IHProgressHUD
 
 class RestaurantsDetailsVC: UIViewController,UITableViewDataSource, UITableViewDelegate {
 
@@ -51,12 +51,30 @@ class RestaurantsDetailsVC: UIViewController,UITableViewDataSource, UITableViewD
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "RestaurantsDetailsCell1Id", for: indexPath) as! RestaurantsDetailsCell1
             
+            if self.restaurantImg != ""{
+                AppUtilitiesSwift.getData(from: self.restaurantImg as String) { data, response, error in
+                    guard let data = data, error == nil else { return }
+                    DispatchQueue.main.async() {
+                        cell.restaurantImageView.image = UIImage(data: data)
+                    }
+                }
+            }
+            else{
+                cell.restaurantImageView.image = UIImage(named: "imageNotFound.png")
+            }
+            
             
             return cell
         }
         else{
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "RestaurantsDetailsCell2Id", for: indexPath) as! RestaurantsDetailsCell2
+            
+            cell.addressLabel.text = restaurantAddress
+            cell.cuisinesLabel.text = restaurantMenu
+            cell.timingLabel.text = restaurantTimings
+            cell.costLabel.text = restaurantCost
+            cell.contactLabel.text = restaurantContact
             
             return cell
         }
@@ -74,6 +92,8 @@ class RestaurantsDetailsVC: UIViewController,UITableViewDataSource, UITableViewD
     }
     
     func getRestaurantDetailsAPICall(){
+        
+        IHProgressHUD.show()
         
         let url = "https://developers.zomato.com/api/v2.1/restaurant"
         let params: [String: Any] = [
@@ -96,16 +116,16 @@ class RestaurantsDetailsVC: UIViewController,UITableViewDataSource, UITableViewD
                     if let locationData:[String:Any] = dataDict["location"] as? [String:Any] {
                         
                         let addressValue:String = locationData["address"] as? String ??  "No Address Found"
-                        self.restaurantAddress = "Address: \(addressValue)"
+                        self.restaurantAddress = addressValue
                     }
                     
                     //Cuisines
                     let cuisines:String = dataDict["cuisines"] as? String ??  "No cuisines Found"
-                    self.restaurantMenu = "Cuisines: \(cuisines)"
+                    self.restaurantMenu = cuisines
                     
                     //Timing
                     let time:String = dataDict["timings"] as? String ??  "Not Found"
-                    self.restaurantTimings = "Timing: \(time)"
+                    self.restaurantTimings = time
                     
                     //Cost
                     let cost:Int = dataDict["average_cost_for_two"] as? Int ??  0
@@ -118,18 +138,18 @@ class RestaurantsDetailsVC: UIViewController,UITableViewDataSource, UITableViewD
                    
                     //contact //phone_numbers : "+91 8061915234" //restaurantContact
                     let contactNumber:String = dataDict["phone_numbers"] as? String ??  "Not Found"
-                    self.restaurantContact = "Contact Number: \(contactNumber)"
+                    self.restaurantContact = contactNumber
                     
                 }
                                 
-                
                 DispatchQueue.main.async {
                     self.mainTableView.reloadData()
+                    IHProgressHUD.dismiss()
                 }
                 
             case .failure(let error):
                 debugPrint(error)
-                SVProgressHUD.dismiss()
+                IHProgressHUD.dismiss()
             }
         }
         

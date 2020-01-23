@@ -1,4 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-ZomatoSampleApp/Pods-ZomatoSampleApp-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
+${BUILT_PRODUCTS_DIR}/IHProgressHUD/IHProgressHUD.framework
 ${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework
-${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework
